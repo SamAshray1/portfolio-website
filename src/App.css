@@ -1,0 +1,384 @@
+* {
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+:root{
+  font-family:'Poppins', sans-serif;
+  --font-used: 'Poppins', sans-serif;
+  --text-color: white;
+  --font-weight-semi: 600;
+}
+
+.flex{
+  display: flex;
+  gap: var(--gap, 1.5rem);
+}
+
+.grid{
+  display: grid;
+  gap: var(--gap, 1rem);
+}
+
+.homepage {
+  background-image: url('./images/tamalsen-home-cover.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+}
+
+.homepage img{
+
+}
+
+header{
+  align-items: center;
+  justify-content: space-between;
+}
+
+.primary-navigation{
+  list-style-type: none;
+  padding: 1em 2em 1em 1em;
+  margin: 0;
+
+  background: hsl(0 0% 100%/0.1);
+  backdrop-filter: blur(1rem);
+}
+
+/* @supports(backdrop-filter: blur(1rem)){
+  .primary-navigation{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  
+    background: hsl(0 0% 0%/0.5);
+  } 
+} */
+
+.primary-navigation a{
+  text-decoration: none;
+  color: white;
+}
+
+.primary-navigation a > [aria-hidden="true"]{
+  font-weight: 600;
+  margin-inline-end: 0.7em;
+}
+
+.mobile-nav-toggle{
+  display: none;
+}
+
+
+.corner-name{
+  margin-left: 2rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.main-content{
+  margin: 0;
+  padding: 6em 3em;
+  color: var(--text-color);
+  display: grid;
+  text-align: center;
+  font-family: var(--font-used);
+  text-transform: uppercase;
+}
+
+.main-content h1{
+  padding: 0;
+  margin: 0;
+  font-size: min(8vw,10em);
+  text-transform: capitalize;
+}
+
+.main-content p{
+  padding: 0;
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 0.2cap;
+  font-weight: 500;
+}
+
+.cursor-circle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #3498db; /* Adjust color as desired */
+  pointer-events: none; /* Make the circle clickable */
+}
+
+.expertise{
+  margin: 0;
+  padding: 6em 3em;
+  background-color: #141C27;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  color: white;
+}
+
+.expertise-items{
+  display: flex;
+  padding-top: min(3vh, 6em);
+}
+
+.expertise-item{
+  padding: 3em 2em;
+  width: min(25vw, 320px);
+  display: grid;
+  border: 1px solid white;
+  gap: 0.5em;
+}
+.expertise-head{
+  display: flex;
+  gap: 2em;
+  align-items: center;
+  justify-items: baseline;
+}
+.expertise-head img{
+  /* width: 60px; */
+  height: 60px;
+  /* aspect-ratio: 1/1; */
+}
+
+.expertise h1{
+  padding: 0;
+  margin: 0;
+  font-size: min(8vw, 5em);
+  text-justify: center;
+}
+
+.expertise h3{
+  padding: 0;
+  margin: 0;
+  font-size: min(3vw, 2em);
+  text-align: left;
+}
+
+/* .expertise-items *{
+  padding: 0;
+  margin: 0;
+} */
+.experience{
+  margin: 0;
+  padding: 6em 3em;
+  background-color: #141C27;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 2em;
+  color: white;
+}
+.experience h1{
+  padding: 0;
+  margin: 0;
+  font-size: min(6vw, 4em);
+  text-justify: center;
+}
+
+.p-bar{
+  width: 720px;
+  display: flex;
+  padding: 0.1em 1em;
+  align-content: center;
+  justify-content: space-between;
+  border-radius: 15px;
+
+  background-color: #750cdd;
+}
+
+.p-bar-details{
+  width: 720px;
+  padding: 0.1em 1em;
+  border-radius: 15px;
+  background-color: #251d40;
+}
+
+
+.tech-items{
+  display: flex;
+  width: fit-content;
+  gap: 1em;
+  align-content: center;
+  justify-content: left;
+}
+
+.tech-items p{
+background-color: #2d3598;
+color: #c1c5e0;
+padding: 5px 8px;
+border-radius: 15px;
+}
+
+.projects{
+  margin: 0;
+  padding: 6em 3em;
+  background-color: #141C27;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 2em;
+  color: white;
+}
+
+.projects h1{
+  padding: 0;
+  margin: 0;
+  font-size: min(8vw, 5em);
+  text-justify: center;
+}
+
+.project-items{
+  display: flex;
+  gap: 5em;
+}
+
+.project-item{
+  padding: 5em;
+  background-color: #201f23;
+}
+
+.bible-app{
+  padding: 5em;
+  display: flex;
+  gap: 5em;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  background-color: #070F2B;
+}
+
+.option-button{
+  width: 8em;
+  height: 6em;
+  font-size: 1.1em;
+  font-weight: bold;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.bible-app h1{
+  color: white;
+}
+.bible-app p{
+  color: white;
+  font-size: 1.2em;
+  width: 80vw;
+}
+
+.bible-app form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  gap: 1em;
+  color: white;
+  font-size: 1.2em;
+}
+
+.bible-app label{
+  width: 8em;
+}
+.options{
+  display: flex;
+  gap: 5em;
+}
+@media (max-width: 35em){
+  .primary-navigation{
+
+    position: fixed;
+    inset: 0 0 0 60%;
+
+    flex-direction: column;
+    padding: min(40vh, 7rem) 1.5rem;
+
+    background: hsl(0 0% 100%/0.1);
+    backdrop-filter: blur(1rem);
+
+    transform: translateX(100%);
+  }
+
+  .primary-navigation[data-visible="true"]{
+    transform: translateX(0%);
+  }
+
+  .mobile-nav-toggle{
+    display: block;
+    position: absolute;
+    z-index: 9999;
+    background-image: url('./static/burger-menu-svgrepo-com.svg');
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 2rem;
+    aspect-ratio: 1;
+    top: 2rem;
+    right: 2rem;
+    border: 0;
+  }
+
+  .main-content h1{
+    display: flex;
+    padding: 0;
+    margin: 0;
+    font-size: 5em;
+    text-transform: capitalize;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+  }
+
+  .main-content p{
+    padding: 0;
+    margin: 1em;
+    font-size: 20px;
+    letter-spacing: 0.2cap;
+    font-weight: 500;
+  }
+
+  .expertise{
+    padding: 5em 2em;
+    background-color: #141C27;
+    display: grid;
+    justify-content: center;
+    align-content: start;
+    color: white;
+    height: 115vh;
+  }
+  .expertise-items{
+    display: block;
+    padding-top: min(6vh, 6em);
+    height: 200px;
+  }
+
+  .expertise-item{
+    width: 70vw;
+  }
+
+  .expertise h1{
+    padding: 0;
+    margin: 0;
+    gap: 5em;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: min(10vw, 6em);
+  }
+
+  .expertise h3{
+    padding: 0;
+    margin: 0;
+    font-size: min(5vw, 4em);
+    text-align: left;
+  }
+}
