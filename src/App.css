@@ -59,20 +59,14 @@ p{
   display: grid;
   gap: var(--gap, 1rem);
 }
-
 .hidden{
   display: none;
 }
-
 .homepage {
   background-image: url('./images/clay-banks-u27Rrbs9Dwc-unsplash.jpg');
   background-size: cover;
   background-position: center;
   height: 80vh;
-}
-
-.homepage img{
-
 }
 
 header{
@@ -162,7 +156,6 @@ header{
 .expertise-item{
   padding: 3em 2em;
   width: min(25vw, 320px);
-  display: grid;
   border: 1px solid white;
   gap: 0.5em;
 }
@@ -384,7 +377,9 @@ border-radius: 15px;
   p{
     font-size: min(5vw, 1.2em);
     }
-
+    .hidden{
+      display: block;
+    }
   .expertise{
     padding: 5em 2em;
     display: grid;
@@ -511,7 +506,6 @@ h3{
   p{
     font-size: min(5vw, 1.2em);
     }
-
   .hidden{
     display: none;
   }
