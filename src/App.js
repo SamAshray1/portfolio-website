@@ -6,6 +6,7 @@ import Expertise from './pages/expertise';
 import Experience from './pages/experience';
 import Projects  from './pages/projects';
 import BibleApp from './pages/bibleapp';
+import Contact from './pages/contact';
 
 function App() {
   return (<BrowserRouter>
@@ -17,6 +18,7 @@ function App() {
         <Expertise />
         <Experience />
         <Projects />
+        <Contact />
       </>
     } />  
     <Route path="/bible-app" element={<BibleApp />} />

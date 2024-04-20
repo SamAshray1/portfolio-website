@@ -5,7 +5,7 @@ import fullstack from "../static/fullstack.png"
 export default function Expertise(){
     return(
         <div className="expertise" id="expertise">
-        <h1>My Expertise</h1>
+        <h2>My Expertise</h2>
         <div className="expertise-items">
             <div className="expertise-item">
                 <div className="expertise-head">
@@ -27,6 +27,11 @@ export default function Expertise(){
                     <h3>Fullstack Dev</h3>
                 </div>
                 <p>Novice Exp in Developing Webapps with features such as Req/Res handling, Data Storage, User Authentication, so on..</p>
+            </div>
+            <div className="expertise-item hidden">
+                <p><b>"So do not fear, for I am with you do not be dismayed, for I am your God.
+I will strengthen you and help you;
+I will uphold you with my righteous right hand."<br /><br />Isaiah 41:10</b></p>
             </div>
         </div>
         </div>

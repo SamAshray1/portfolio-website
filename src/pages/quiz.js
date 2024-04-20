@@ -6,7 +6,7 @@ function Quiz() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:8080/get-verse-list")
+    fetch("https://test.com/references/get-verse-list")
       .then((response) => response.json())
       .then((json) => {
         console.log("Fetched data:", json); // Check the structure of the fetched data
@@ -44,7 +44,7 @@ function Quiz() {
     <div>
       {data && randomKeys.length > 0 && (
         <div>
-          <h1>{randomKeys[currentIndex]}</h1>
+          <h2>{String(randomKeys[currentIndex]).toUpperCase()}</h2>
           <button onClick={handleNextKey}>Next Key</button>
         </div>
       )}

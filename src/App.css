@@ -5,7 +5,43 @@
 a {
   text-decoration: none;
   color: white;
+  font-size: 1.2em;
 }
+
+h1{
+  padding: 0;
+  margin: 0;
+  font-size: min(10vw,8em);
+  text-transform: capitalize;
+  text-align: center;
+  color: white;
+}
+
+h2{
+  padding: 0;
+  margin: 0;
+  font-size: min(8vw, 4em);
+  text-align: center;
+  color: white;
+}
+
+h3{
+  padding: 0;
+  margin: 0;
+  font-size: min(3vw, 2em);
+  text-align: center;
+}
+
+h4{
+  padding: 0;
+  margin: 0;
+  font-size: min(5vw, 1.5em);
+  text-align: center;
+}
+
+p{
+  font-size: min(3vw, 1.3em);
+  }
 
 :root{
   font-family:'Poppins', sans-serif;
@@ -24,8 +60,12 @@ a {
   gap: var(--gap, 1rem);
 }
 
+.hidden{
+  display: none;
+}
+
 .homepage {
-  background-image: url('./images/tamalsen-home-cover.jpg');
+  background-image: url('./images/clay-banks-u27Rrbs9Dwc-unsplash.jpg');
   background-size: cover;
   background-position: center;
   height: 80vh;
@@ -41,6 +81,7 @@ header{
 }
 
 .primary-navigation{
+  position: sticky;
   list-style-type: none;
   padding: 1em 2em 1em 1em;
   margin: 0;
@@ -81,28 +122,13 @@ header{
 }
 
 .main-content{
-  margin: 0;
+  margin-top: 10vh;
   padding: 6em 3em;
   color: var(--text-color);
   display: grid;
   text-align: center;
   font-family: var(--font-used);
   text-transform: uppercase;
-}
-
-.main-content h1{
-  padding: 0;
-  margin: 0;
-  font-size: min(8vw,10em);
-  text-transform: capitalize;
-}
-
-.main-content p{
-  padding: 0;
-  margin: 0;
-  font-size: 24px;
-  letter-spacing: 0.2cap;
-  font-weight: 500;
 }
 
 .cursor-circle {
@@ -117,12 +143,15 @@ header{
 .expertise{
   margin: 0;
   padding: 6em 3em;
-  background-color: #141C27;
+  background-color: #1a1e1d;
   display: flex;
   flex-direction: column;
   justify-items: center;
   align-items: center;
   color: white;
+}
+.expertise h3{
+  text-align: left;
 }
 
 .expertise-items{
@@ -149,20 +178,6 @@ header{
   /* aspect-ratio: 1/1; */
 }
 
-.expertise h1{
-  padding: 0;
-  margin: 0;
-  font-size: min(8vw, 5em);
-  text-justify: center;
-}
-
-.expertise h3{
-  padding: 0;
-  margin: 0;
-  font-size: min(3vw, 2em);
-  text-align: left;
-}
-
 /* .expertise-items *{
   padding: 0;
   margin: 0;
@@ -170,19 +185,13 @@ header{
 .experience{
   margin: 0;
   padding: 6em 3em;
-  background-color: #141C27;
+  background-color: #1a1e1d;
   display: flex;
   flex-direction: column;
   justify-items: center;
   align-items: center;
   gap: 2em;
   color: white;
-}
-.experience h1{
-  padding: 0;
-  margin: 0;
-  font-size: min(6vw, 4em);
-  text-justify: center;
 }
 
 .p-bar{
@@ -195,14 +204,30 @@ header{
 
   background-color: #750cdd;
 }
+.p-bar h4{
+  margin: 0;
+  padding: 0;
+}
 
 .p-bar-details{
   width: 720px;
-  padding: 0.1em 1em;
+  padding: 0 1em;
   border-radius: 15px;
   background-color: #251d40;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.8s ease; /* Add transition property */
+  margin: 0; /* Reset margin */
+  border: none; /* Reset border */
 }
 
+.p-bar-details.open {
+  max-height: 500px; /* Set an appropriate max-height */
+  width: 720px;
+  padding: 0.1em 1em;
+  border-radius: 15px;
+  transition: 0 0.6s ease;
+}
 
 .tech-items{
   display: flex;
@@ -213,6 +238,7 @@ header{
 }
 
 .tech-items p{
+font-size: 1em;
 background-color: #2d3598;
 color: #c1c5e0;
 padding: 5px 8px;
@@ -222,7 +248,51 @@ border-radius: 15px;
 .projects{
   margin: 0;
   padding: 6em 3em;
-  background-color: #141C27;
+  background-color: #1a1e1d;
+  display: block;
+  color: white;
+}
+
+.project-items{
+  margin-top: 3em;
+  display: flex;
+  justify-content: center;
+  gap: 5em;
+}
+
+.project-item{
+  position: relative;
+  width: 14vw;
+  aspect-ratio: 5/3;
+  padding: 5em;
+  background-color: #201f23;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-content: flex-end;
+  } 
+
+.project-text{
+  position: absolute;
+  margin-top: auto;
+  bottom: 0;
+  width: 100%;
+  height: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact{
+  margin: 0;
+  padding: 6em 3em;
+  background-color: #1a1e1d;
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -231,25 +301,10 @@ border-radius: 15px;
   color: white;
 }
 
-.projects h1{
-  padding: 0;
-  margin: 0;
-  font-size: min(8vw, 5em);
-  text-justify: center;
-}
-
-.project-items{
-  display: flex;
-  gap: 5em;
-}
-
-.project-item{
-  padding: 5em;
-  background-color: #201f23;
-}
 
 .bible-app{
-  padding: 5em;
+  height: 100vh;
+  padding: 4em 3em 5em;
   display: flex;
   gap: 5em;
   flex-direction: column;
@@ -267,9 +322,6 @@ border-radius: 15px;
   cursor: pointer;
 }
 
-.bible-app h1{
-  color: white;
-}
 .bible-app p{
   color: white;
   font-size: 1.2em;
@@ -290,10 +342,179 @@ border-radius: 15px;
   width: 8em;
 }
 .options{
+  margin-top: 2em;
   display: flex;
   gap: 5em;
 }
-@media (max-width: 35em){
+
+@media (max-width: 70em){
+
+  h1{
+    display: flex;
+    padding: 0;
+    margin: 0;
+    font-size: 5em;
+    text-transform: capitalize;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+  }
+
+  h2{
+    padding: 0;
+    margin: 0;
+    font-size: min(8vw, 4em);
+    text-align: center;
+    color: white;
+  }
+    
+  h3{
+    padding: 0;
+    margin: 0;
+    font-size: 1em;
+    text-align: center;
+  }
+  h4{
+    padding: 0;
+    margin: 0;
+    font-size: min(5vw, 1.2em);
+    text-align: center;
+  }
+
+  p{
+    font-size: min(5vw, 1.2em);
+    }
+
+  .expertise{
+    padding: 5em 2em;
+    display: grid;
+    justify-content: center;
+    align-content: start;
+    color: white;
+    height: 110vh;
+  }
+  .expertise-items{
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: min(6vh, 6em);
+    height: 200px;
+    justify-content: center;
+  }
+
+  .expertise-item{
+    width: 30vw;
+  }
+
+  .expertise h3{
+    padding: 0;
+    margin: 0;
+    font-size: min(5vw, 2.5em);
+    text-align: left;
+  }
+
+  .p-bar{
+    width: 80vw;
+    display: flex;
+    padding: 0.1em 1em;
+    align-content: center;
+    justify-content: space-between;
+    border-radius: 15px;
+  }
+  
+  .p-bar-details{
+    width: 80vw;
+    padding: 0 1em;
+    border-radius: 15px;
+    background-color: #251d40;
+  }
+
+  .p-bar-details.open{
+    width: 80vw;
+    padding: 0.1em 1em;
+    border-radius: 15px;
+    background-color: #251d40;
+  }
+
+  .tech-items{
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+    gap: 0.8em;
+    row-gap: 0;
+    align-content: center;
+    justify-content: left;
+  }
+
+  
+.project-items{
+  margin-top: 3em;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3em;
+}
+
+.project-item{
+  position: relative;
+  width: 16vw;
+  aspect-ratio: 5/3;
+  padding: 5em;
+  background-color: #201f23;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-content: flex-end;
+  } 
+  
+.contact{
+  margin: 0;
+  padding: 6em 3em;
+  background-color: #1a1e1d;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 2em;
+  color: white;
+}
+}
+
+@media (max-width: 45em){
+
+  h1{
+    display: flex;
+    padding: 0;
+    margin: 0;
+    font-size: 5em;
+    text-transform: capitalize;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+  }
+  
+h3{
+  padding: 0;
+  margin: 0;
+  font-size: 1.1em;
+  text-align: center;
+}
+  h4{
+    padding: 0;
+    margin: 0;
+    font-size: min(5vw, 1.2em);
+    text-align: center;
+  }
+
+  p{
+    font-size: min(5vw, 1.2em);
+    }
+
+  .hidden{
+    display: none;
+  }
   .primary-navigation{
 
     position: fixed;
@@ -314,7 +535,7 @@ border-radius: 15px;
 
   .mobile-nav-toggle{
     display: block;
-    position: absolute;
+    position: fixed;
     z-index: 9999;
     background-image: url('./static/burger-menu-svgrepo-com.svg');
     background-color: transparent;
@@ -327,28 +548,8 @@ border-radius: 15px;
     border: 0;
   }
 
-  .main-content h1{
-    display: flex;
-    padding: 0;
-    margin: 0;
-    font-size: 5em;
-    text-transform: capitalize;
-    justify-content: center;
-    align-items: center;
-    line-height: 1.2;
-  }
-
-  .main-content p{
-    padding: 0;
-    margin: 1em;
-    font-size: 20px;
-    letter-spacing: 0.2cap;
-    font-weight: 500;
-  }
-
   .expertise{
     padding: 5em 2em;
-    background-color: #141C27;
     display: grid;
     justify-content: center;
     align-content: start;
@@ -365,20 +566,80 @@ border-radius: 15px;
     width: 70vw;
   }
 
-  .expertise h1{
-    padding: 0;
-    margin: 0;
-    gap: 5em;   
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: min(10vw, 6em);
-  }
-
   .expertise h3{
     padding: 0;
     margin: 0;
     font-size: min(5vw, 4em);
     text-align: left;
   }
+
+  .p-bar{
+    width: 80vw;
+    display: flex;
+    padding: 0.1em 1em;
+    align-content: center;
+    justify-content: space-between;
+    border-radius: 15px;
+  }
+  
+  .p-bar-details{
+    width: 80vw;
+    padding: 0 1em;
+    border-radius: 15px;
+    background-color: #251d40;
+  }
+
+  .p-bar-details.open{
+    width: 80vw;
+    padding: 0.1em 1em;
+    border-radius: 15px;
+    background-color: #251d40;
+  }
+
+  .tech-items{
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+    gap: 0.8em;
+    row-gap: 0;
+    align-content: center;
+    justify-content: left;
+  }
+
+  
+.project-items{
+  margin-top: 3em;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3em;
+}
+
+.project-item{
+  position: relative;
+  width: 16vw;
+  aspect-ratio: 5/3;
+  padding: 5em;
+  background-color: #201f23;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-content: flex-end;
+  } 
+  
+.contact{
+  margin: 0;
+  padding: 6em 3em;
+  background-color: #1a1e1d;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 2em;
+  color: white;
+}
+
 }

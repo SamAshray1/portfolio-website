@@ -31,7 +31,7 @@ export default function Header(){
 
     return(
         <header className="flex">
-            <h1 className="corner-name">Sam.Ashray_</h1>
+            <h4 className="corner-name">Sam.Ashray_</h4>
 
             <button className="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
                 {/* <span className="sr-only">Menu</span> */}

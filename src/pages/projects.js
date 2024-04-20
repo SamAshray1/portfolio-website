@@ -1,29 +1,32 @@
 import {useState, useEffect} from 'react';
+import project1 from '../images/project1.png'
+import project2 from '../images/project2.png'
 
 export default function Projects(){
-    const [data, setData] = useState(null);
-
-
-    useEffect(() =>{
-        fetch('http://localhost:8080/get-verse-list')
-        .then(response => response.json())
-        .then(json => setData(json))
-        .catch(error => console.error(error));
-    }, []);
 
     return(
         <div className="projects" id="projects">
-            <h1>Projects</h1>
-            {/* {data ? <pre>{JSON.stringify(data, null, 2)}</pre>: 'Loading...'} */}
+            <h2>Projects</h2>
             <div className="project-items">
-                <a href="/bible-app"><div className="project-item">
-                    <h3>Bible Memorization App</h3>
-                </div></a>
-                <div className="project-item">
-                    <h3>Project #1</h3>
+                <div>
+                <a href="/bible-app" target="_blank">
+                    <div className="project-item" style={{ backgroundImage: `url(${project1})`}}>
+                        <div className="project-text">
+                            <h4>Bible Memorization App</h4>
+                        </div> 
+                    </div>
+                </a>
+                <p>#Springboot #REST</p>
                 </div>
-                <div className="project-item">
-                    <h3>Project #2</h3>
+                <div>
+                <a href="https://github.com/SamAshray1/CoronaVirus-Flask_Deployment" target="_blank">
+                    <div className="project-item" style={{ backgroundImage: `url(${project2})`}}>
+                    <div className="project-text">
+                        <h4>Corona Virus Predicter</h4>
+                    </div> 
+                    </div>
+                </a>
+                <p>#DataScience #Flask</p>
                 </div>
             </div>
         </div>

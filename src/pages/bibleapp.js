@@ -10,7 +10,7 @@ function BibleApp(){
     const handleClick = () => {
         setShowForm(false);
         setQuiz(false);
-        fetch('http://localhost:8080/get-verse-list')
+        fetch('https://test.com/references/get-verse-list')
         .then(response => response.json())  
         .then(json => {
             setData(json);
@@ -42,14 +42,18 @@ function BibleApp(){
         setQuiz(true);
     }
 
+    useEffect(() => {
+        document.title = 'Bible Memory App';
+      }, []);
+
     return(<div className="bible-app">
-        <h1>Bible Memorization App</h1>
+        <h2>Bible Memorization App</h2>
         <div className="options">
             <button onClick={handleClick} className="option-button">View Verses</button>
             <button onClick={handleButtonClick} className="option-button">Add Verses</button>
             <button onClick={handleQClick} className="option-button">Quiz</button>
         </div>
-        {data && (<div>{data.map((item, index) => (<p key={`verse-${index}`}><b>{Object.keys(item)[0]}</b> - {item[Object.keys(item)[0]]}</p>))}</div>)}
+        {data && (<div>{data.map((item, index) => (<p key={`verse-${index}`}><b>{Object.keys(item)[0].toUpperCase()}</b> - {item[Object.keys(item)[0]]}</p>))}</div>)}
         {showForm && <AddVerseForm onSubmit={handleSubmit} />} {/* Render the form component */}
         { showQuiz && <Quiz />}
 

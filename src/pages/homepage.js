@@ -6,7 +6,7 @@ export default function Homepage(){
             <Header defer/>
             <div className="main-content">
                 <h1>SAM ASHRAY</h1>
-                <p>Devops Engineer & Backend Developer.</p>
+                <h3>Devops Engineer & Backend Developer.</h3>
             </div>
         </div>
     )
