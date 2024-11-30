@@ -10,7 +10,7 @@ function BibleApp(){
     const handleClick = () => {
         setShowForm(false);
         setQuiz(false);
-        fetch('https://test.com/references/get-verse-list')
+        fetch('http://localhost:8080/references/get-verse-list')
         .then(response => response.json())  
         .then(json => {
             setData(json);

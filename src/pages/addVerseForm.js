@@ -18,7 +18,7 @@ function AddVerseForm({ onSubmit }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('https:/test.com/references/add-verse', {
+      const response = await fetch('http://localhost:8080/references/add-verse', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

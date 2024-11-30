@@ -6,7 +6,7 @@ function Quiz() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    fetch("https://test.com/references/get-verse-list")
+    fetch("http://localhost:8080/references/get-verse-list")
       .then((response) => response.json())
       .then((json) => {
         console.log("Fetched data:", json); // Check the structure of the fetched data
