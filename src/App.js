@@ -7,6 +7,7 @@ import Experience from './pages/experience';
 import Projects  from './pages/projects';
 import BibleApp from './pages/bibleapp';
 import Contact from './pages/contact';
+import Blog from './pages/blog';
 
 function App() {
   return (<BrowserRouter>
@@ -22,6 +23,7 @@ function App() {
       </>
     } />  
     <Route path="/bible-app" element={<BibleApp />} />
+    <Route path="/blog" element={<Blog />} />
   </Routes>
   </ BrowserRouter>);
 
