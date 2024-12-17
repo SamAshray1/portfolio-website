@@ -14,7 +14,7 @@ const Blog = () => {
     };  useEffect(() => {
       getPostData();
     }, []);  return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px", padding: "20px" }}>
+        <div className="blog">
         {posts.map((post) => {
           // Extract the first paragraph from the post content
           const parser = new DOMParser();
@@ -25,27 +25,18 @@ const Blog = () => {
           return (
             <div
               key={post.guid}
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "flex-start",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                padding: "10px",
-                backgroundColor: "#f9f9f9",
-              }}
+              className="blog-item"
             >
               {imageSrc && (
                 <img
                   src={imageSrc}
                   alt="Article visual"
-                  style={{ width: "150px", height: "auto", borderRadius: "4px" }}
                 />
               )}
               <div>
-                <h2 style={{ margin: "0 0 10px", font:"30px", color:"black"}}>{post.title}</h2>
+                <h3>{post.title}</h3>
                 <p>{firstParagraph}</p>
-                <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ color: "#0073e6" }}>
+                <a href={post.link} target="_blank" rel="noopener noreferrer">
                   Read more
                 </a>
               </div>

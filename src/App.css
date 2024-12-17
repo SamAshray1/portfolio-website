@@ -340,6 +340,42 @@ border-radius: 15px;
   gap: 5em;
 }
 
+.blog{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.blog-item{
+  display: flex;
+  width: 70vw;
+  gap: 20px;
+  align-items: flex-start;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.blog-item img{
+  width: 300px;
+  aspect-ratio: 16/9;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.blog-item h2{
+  margin: 0 0 10px;
+  color: black;
+}
+
+.blog-item a{
+  color: #0073e6;
+}
+
 @media (max-width: 70em){
 
   h1{
