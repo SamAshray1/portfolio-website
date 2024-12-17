@@ -7,7 +7,7 @@ function Contact(){
         Send me an email or contact me via instant message!</p>
         <a href="https://www.linkedin.com/in/sam-ashray-a65398187/" target="_blank">LinkedIn</a>
         <a href="https://github.com/SamAshray1" target="_blank">Github</a>
-        <a href="https://medium.com/@sam.ashray1" target="_blank">Blog</a>
+        <a href="./blog" target="_blank">Blog</a>
         </div>
     )
 }
