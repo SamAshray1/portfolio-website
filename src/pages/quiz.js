@@ -4,9 +4,10 @@ function Quiz() {
   const [data, setData] = useState(null);
   const [randomKeys, setRandomKeys] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const API_URL = process.env.BACKEND_API_URL;
 
   useEffect(() => {
-    fetch("http://localhost:8080/references/get-verse-list")
+    fetch("http://${API_URL}:8080/references/get-verse-list")
       .then((response) => response.json())
       .then((json) => {
         console.log("Fetched data:", json); // Check the structure of the fetched data

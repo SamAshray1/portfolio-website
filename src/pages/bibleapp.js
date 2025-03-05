@@ -2,15 +2,17 @@ import {useState, useEffect} from 'react';
 import AddVerseForm from './addVerseForm';
 import Quiz from './quiz';
 
+
 function BibleApp(){
     const [data, setData] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [showQuiz, setQuiz] = useState(false);
+    const API_URL = process.env.BACKEND_API_URL;
 
     const handleClick = () => {
         setShowForm(false);
         setQuiz(false);
-        fetch('http://localhost:8080/references/get-verse-list')
+        fetch('http://${API_URL}:8080/references/get-verse-list')
         .then(response => response.json())  
         .then(json => {
             setData(json);

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
+
 function AddVerseForm({ onSubmit }) {
+  const API_URL = process.env.BACKEND_API_URL;
   const [formData, setFormData] = useState({
     book: '',
     chapter: '',
@@ -18,7 +20,7 @@ function AddVerseForm({ onSubmit }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/references/add-verse', {
+      const response = await fetch('http://${API_URL}:8080/references/add-verse', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
