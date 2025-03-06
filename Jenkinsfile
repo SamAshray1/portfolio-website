@@ -93,12 +93,12 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
             }
         }
 
-        stage('Terraform Destroy') {
-            steps {
-                dir('terraform') {
-                    sh 'terraform destroy -auto-approve'
-                }
-            }
-        }
+        // stage('Terraform Destroy') {
+        //     steps {
+        //         dir('terraform') {
+        //             sh 'terraform destroy -auto-approve'
+        //         }
+        //     }
+        // }
     }
 }
