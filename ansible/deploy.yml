@@ -1,0 +1,28 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update and install dependencies
+      apt:
+        update_cache: yes
+
+    - name: Install Node.js and npm
+      apt:
+        name: nodejs
+        state: present
+
+    - name: Install npm
+      apt:
+        name: npm
+        state: present
+
+    - name: Clone React app from repo
+      git:
+        repo: 'https://github.com/your-repo/react-app.git'
+        dest: /home/ubuntu/react-app
+        version: main
+
+    - name: Install npm dependencies
+      shell: "cd /home/ubuntu/react-app && npm install"
+
+    - name: Start React app
+      shell: "cd /home/ubuntu/react-app && nohup npm start > output.log 2>&1 &"
