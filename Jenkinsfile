@@ -37,7 +37,7 @@ pipeline {
 
                     // Create Ansible inventory dynamically
                     writeFile file: 'ansible/inventory.ini', text: """[react-server]
-${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile} ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'"""
+${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
                     if (ec2_ip) {
                         echo "EC2 Public IP: ${ec2_ip}"
                         env.REACT_APP_IP = ec2_ip
@@ -54,13 +54,14 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile} ansible
                     // sh "echo '${REACT_APP_IP}' >> inventory"
                     sh "cat /tmp/jenkins_ssh_key.pem"
                     sh "cat inventory.ini"
-                    // sh 'ansible-playbook -i inventory.ini deploy.yml -vvvv'
+                    
                     sh "ssh-keyscan -H 100.27.23.82 >> ~/.ssh/known_hosts"
-                    ansiblePlaybook credentialsId: 'jenkins-ssh-key',
-                                 disableHostKeyChecking: true,
-                                 installation: 'Ansible',
-                                 inventory: 'inventory.ini',
-                                 playbook: 'deploy.yml'
+                    sh 'ansible-playbook -i inventory.ini deploy.yml -vvvv'
+                    // ansiblePlaybook credentialsId: 'jenkins-ssh-key',
+                    //              disableHostKeyChecking: true,
+                    //              installation: 'Ansible',
+                    //              inventory: 'inventory.ini',
+                    //              playbook: 'deploy.yml'
                 }
             }
         }
