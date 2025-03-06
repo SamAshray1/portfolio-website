@@ -6,7 +6,7 @@ resource "aws_instance" "react_app" {
   ami             = "ami-011899242bb902164"
   instance_type   = "t2.micro"
 #  key_name        = aws_key_pair.ansible_key.key_name
-  security_groups = ["react-sg"]
+  security_groups = [aws_security_group.react_sg.name]
 
   tags = {
     Name = "ReactApp-Server"
