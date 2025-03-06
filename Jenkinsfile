@@ -48,6 +48,14 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
             }
         }
 
+        stage('Terraform Destroy') {
+            steps {
+                dir('terraform') {
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
+
         stage('Test SSH Connection') {
             steps {
                 script {
@@ -63,7 +71,7 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
                 }
             }
         }
-        
+
         stage('Run Ansible') {
             steps {
                 dir('ansible') {
@@ -81,6 +89,14 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
                     //              installation: 'Ansible',
                     //              inventory: 'inventory.ini',
                     //              playbook: 'deploy.yml'
+                }
+            }
+        }
+
+        stage('Terraform Destroy') {
+            steps {
+                dir('terraform') {
+                    sh 'terraform destroy -auto-approve'
                 }
             }
         }
