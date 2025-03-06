@@ -52,6 +52,7 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile} ansible
                 dir('ansible') {
                     // sh "echo '[app]' > inventory"
                     // sh "echo '${REACT_APP_IP}' >> inventory"
+                    sh "cat /tmp/jenkins_ssh_key.pem"
                     sh "cat inventory.ini"
                     sh 'ansible-playbook -i inventory.ini deploy.yml -vvvv'
                 }
