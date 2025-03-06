@@ -36,7 +36,7 @@ pipeline {
                     sh "chmod 600 ${sshKeyFile}"  // Secure the private key file
 
                     // Create Ansible inventory dynamically
-                    writeFile file: 'inventory.ini', text: """[react-server]
+                    writeFile file: 'ansible/inventory.ini', text: """[react-server]
 ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
                     if (ec2_ip) {
                         echo "EC2 Public IP: ${ec2_ip}"
