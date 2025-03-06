@@ -21,7 +21,7 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 dir('terraform') {
-                    sh 'terraform apply -auto-approve -var "ssh_key=${SSH_KEY}"'
+                    sh 'terraform apply -auto-approve'
                 }
             }
         }

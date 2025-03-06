@@ -2,18 +2,14 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Fetch SSH key from Jenkins environment variable
-variable "ssh_key" {}
-
-resource "aws_key_pair" "jenkins_key" {
-  key_name   = "jenkins-key"
-  public_key = var.ssh_key
+variable "existing_key_pair" {
+  default = "jenkins-key"  # Replace with your actual key pair name
 }
 
 resource "aws_instance" "react_app" {
   ami             = "ami-011899242bb902164"
   instance_type   = "t2.micro"
-  key_name      = aws_key_pair.jenkins_key.key_name
+  key_name      = var.existing_key_pair
   security_groups = [aws_security_group.react_sg.name]
 
   tags = {
