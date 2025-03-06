@@ -55,6 +55,7 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile} ansible
                     sh "cat /tmp/jenkins_ssh_key.pem"
                     sh "cat inventory.ini"
                     // sh 'ansible-playbook -i inventory.ini deploy.yml -vvvv'
+                    sh "ssh-keyscan -H 100.27.23.82 >> ~/.ssh/known_hosts"
                     ansiblePlaybook credentialsId: 'jenkins-ssh-key',
                                  disableHostKeyChecking: true,
                                  installation: 'Ansible',
