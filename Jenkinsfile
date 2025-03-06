@@ -27,10 +27,12 @@ pipeline {
         stage('Extract EC2 IP') {
             steps {
                 script {
-                    def output = sh(script: "terraform output public_ip", returnStdout: true).trim()
-                    sh "terraform output public_ip"
-                    sh "echo ${output}"
-                    env.REACT_APP_IP = output
+                    def ec2_ip = sh(script: "cd terraform && terraform output -raw public_ip", returnStdout: true).trim()
+                    if (ec2_ip) {
+                        echo "EC2 Public IP: ${ec2_ip}"
+                    } else {
+                        error("Public IP output not found! Check Terraform state.")
+                    }
                 }
             }
         }
