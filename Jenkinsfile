@@ -28,6 +28,8 @@ pipeline {
             steps {
                 script {
                     def output = sh(script: "terraform output ec2_public_dns", returnStdout: true).trim()
+                    sh "echo 1testesssss"
+                    sh "echo ${output}"
                     env.REACT_APP_IP = output
                 }
             }
@@ -37,7 +39,7 @@ pipeline {
                 dir('ansible') {
                     sh "echo '[app]' > inventory"
                     sh "echo '${REACT_APP_IP}' >> inventory"
-                    sh 'ansible-playbook -i inventory ansible/deploy.yaml'
+                    sh 'ansible-playbook -i inventory deploy.yaml'
                 }
             }
         }
