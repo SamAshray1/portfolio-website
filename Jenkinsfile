@@ -40,7 +40,7 @@ pipeline {
             steps {
                 dir('ansible') {
                     sh "echo '[app]' > inventory"
-                    sh "echo '${REACT_APP_IP}' >> inventory"
+                    sh "echo '${ec2_ip}' >> inventory"
                     sh 'ansible-playbook -i inventory deploy.yaml'
                 }
             }
