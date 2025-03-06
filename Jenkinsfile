@@ -47,6 +47,23 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
                 }
             }
         }
+
+        stage('Test SSH Connection') {
+            steps {
+                script {
+                    def ssh_test = sh(script: """
+                        eval \$(ssh-agent -s)
+                        ssh-add /tmp/jenkins_ssh_key.pem
+                        ssh -o StrictHostKeyChecking=no ubuntu@${env.REACT_APP_IP} "echo SSH Connection Successful"
+                    """, returnStatus: true)
+                    
+                    if (ssh_test != 0) {
+                        error("SSH connection failed. Check private key and permissions.")
+                    }
+                }
+            }
+        }
+        
         stage('Run Ansible') {
             steps {
                 dir('ansible') {
