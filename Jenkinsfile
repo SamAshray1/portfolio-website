@@ -5,9 +5,9 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-key')
     }
     stages {
-        stage('Checkout Code') {
+        stage('Git Checkout') {
             steps {
-                git 'https://github.com/SamAshray1/portfolio-website.git'
+               git branch: 'main', credentialsId: 'github-username', url: 'https://github.com/SamAshray1/portfolio-website.git'
             }
         }
         stage('Terraform Init') {
