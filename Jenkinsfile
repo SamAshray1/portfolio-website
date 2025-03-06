@@ -27,7 +27,7 @@ pipeline {
         stage('Extract EC2 IP') {
             steps {
                 script {
-                    def output = sh(script: "terraform output -raw react_app_instance_ip", returnStdout: true).trim()
+                    def output = sh(script: "terraform output ec2_public_dns", returnStdout: true).trim()
                     env.REACT_APP_IP = output
                 }
             }
@@ -37,7 +37,7 @@ pipeline {
                 dir('ansible') {
                     sh "echo '[app]' > inventory"
                     sh "echo '${REACT_APP_IP}' >> inventory"
-                    sh 'ansible-playbook -i inventory deploy.yaml'
+                    sh 'ansible-playbook -i inventory ansible/deploy.yaml'
                 }
             }
         }

@@ -57,3 +57,7 @@ resource "aws_security_group" "react_sg" {
 # key_name   = "ansible-key"
 # public_key = file("ansible-key.pub")
 # }
+
+output "ec2_public_dns" {
+  value = aws_instance.react_app.public_dns
+}
