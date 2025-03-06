@@ -58,6 +58,6 @@ resource "aws_security_group" "react_sg" {
 # public_key = file("ansible-key.pub")
 # }
 
-output "ec2_public_dns" {
-  value = aws_instance.react_app.public_dns
+output "public_ip" {
+  value = aws_instance.jenkins.public_dns
 }

@@ -27,8 +27,8 @@ pipeline {
         stage('Extract EC2 IP') {
             steps {
                 script {
-                    def output = sh(script: "terraform output ec2_public_dns", returnStdout: true).trim()
-                    sh "echo 1testesssss"
+                    def output = sh(script: "terraform output public_ip", returnStdout: true).trim()
+                    sh "terraform output public_ip"
                     sh "echo ${output}"
                     env.REACT_APP_IP = output
                 }
