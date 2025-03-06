@@ -58,5 +58,5 @@ resource "aws_security_group" "react_sg" {
 }
 
 output "public_ip" {
-  value = aws_instance.react_app.public_dns
+  value = aws_instance.react_app.public_ip
 }
