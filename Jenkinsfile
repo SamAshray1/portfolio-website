@@ -30,6 +30,7 @@ pipeline {
                     def ec2_ip = sh(script: "cd terraform && terraform output -raw public_ip", returnStdout: true).trim()
                     if (ec2_ip) {
                         echo "EC2 Public IP: ${ec2_ip}"
+                        env.REACT_APP_IP = ec2_ip
                     } else {
                         error("Public IP output not found! Check Terraform state.")
                     }
@@ -40,7 +41,7 @@ pipeline {
             steps {
                 dir('ansible') {
                     sh "echo '[app]' > inventory"
-                    sh "echo '${ec2_ip}' >> inventory"
+                    sh "echo '${REACT_APP_IP}' >> inventory"
                     sh 'ansible-playbook -i inventory deploy.yaml'
                 }
             }
