@@ -55,7 +55,9 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
                     sh "cat /tmp/jenkins_ssh_key.pem"
                     sh "cat inventory.ini"
                     
+                    sh "mkdir -p ~/.ssh"
                     sh "ssh-keyscan -H 100.27.23.82 >> ~/.ssh/known_hosts"
+                    sh "ssh-keyscan -H ${REACT_APP_IP} >> ~/.ssh/known_hosts"
                     sh 'ansible-playbook -i inventory.ini deploy.yml -vvvv'
                     // ansiblePlaybook credentialsId: 'jenkins-ssh-key',
                     //              disableHostKeyChecking: true,
