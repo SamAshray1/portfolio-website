@@ -17,7 +17,7 @@
 
     - name: Clone React app from repo
       git:
-        repo: 'https://github.com/your-repo/react-app.git'
+        repo: 'https://github.com/SamAshray1/portfolio-website.git'
         dest: /home/ubuntu/react-app
         version: main
 

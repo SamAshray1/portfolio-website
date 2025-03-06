@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/your-repo.git'
+                git 'https://github.com/SamAshray1/portfolio-website.git'
             }
         }
         stage('Terraform Init') {
@@ -36,7 +36,7 @@ pipeline {
             steps {
                 dir('ansible') {
                     sh "echo '[app]' > inventory"
-                    sh "echo '${REACT_APP_IP} ansible_user=ubuntu ansible_ssh_private_key_file=../terraform/ansible-key' >> inventory"
+                    sh "echo '${REACT_APP_IP}' >> inventory"
                     sh 'ansible-playbook -i inventory deploy.yaml'
                 }
             }
