@@ -130,19 +130,21 @@ pipeline {
                 }
             }
         }
-        stage('SCP Build to EC2') {
+
+        stage('Deploy React App on EC2') {
             steps {
                 sshagent(['jenkins-ssh-key']) {
                     script {
                         def ec2User = 'ubuntu'
                         def projectDir = "/home/${ec2User}/portfolio-website"
-                        def buildDir = "build"
 
                         sh """
-                        echo '📡 Copying build files to EC2...'
-                        scp -r -o StrictHostKeyChecking=no ${buildDir} ${ec2User}@${env.REACT_APP_IP}:${projectDir}
-
-                        echo '✅ Build files transferred successfully!'
+                        ssh -o StrictHostKeyChecking=no ${ec2User}@${env.REACT_APP_IP} <<EOF
+                        echo '🚀 Starting React app on EC2...'
+                        cd ${projectDir}
+                        nohup serve -s build -l 3000 > react.log 2>&1 &
+                        echo '✅ React app is running on port 3000!'
+                        EOF
                         """
                     }
                 }
