@@ -92,7 +92,7 @@ pipeline {
                     npm install
 
                     echo '⚙️ Building the React app...'
-                    npm run build
+                    CI=false npm run build
 
                     ls
                     """
