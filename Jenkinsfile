@@ -150,8 +150,8 @@ pipeline {
                         sudo apt-get install -y nodejs
 
                         echo '📦 Installing dependencies...'
-                        npm install
-                        npm install -g serve
+                        sudo npm install
+                        sudo npm install -g serve
 
                         echo '🚀 Starting React app on EC2...'
                         cd ${projectDir}
