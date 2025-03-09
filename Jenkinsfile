@@ -42,46 +42,61 @@ pipeline {
         stage('Write SSH Key to File') {
             steps {
                 script {
-                    def sshKeyFile = "ansible/ssh_key.pem"  // Define path inside ansible directory
-
-                    // Write SSH key to file
+                    def sshKeyFile = "ssh_key.pem"
                     writeFile file: sshKeyFile, text: SSH_KEY
-                    sh "chmod 600 ${sshKeyFile}"  // Secure key file
-
-                    echo "✅ SSH Key written to ${sshKeyFile}"
+                    sh "chmod 600 ${sshKeyFile}"  // Secure the file
                 }
             }
         }
 
-        stage('Debug Secret') {
-    steps {
-        script {
-            sh 'echo "⚠️ DEBUG: SECRET_VALUE is $SSH_KEY"'  // Not recommended!
-        }
-    }
-}
-
-
-        stage('Run Ansible') {
+        stage('SSH into EC2 & Run Commands') {
             steps {
-                dir('ansible') {
-                    // sh "echo '[app]' > inventory"
-                    // sh "echo '${REACT_APP_IP}' >> inventory"
-                    sh "cat /tmp/jenkins_ssh_key.pem"
-                    sh "cat inventory.ini"
-                    sh "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /tmp/jenkins_ssh_key.pem ubuntu@100.27.23.82"
-                    // sh "mkdir -p ~/.ssh"
-                    // sh "ssh-keyscan -H 100.27.23.82 >> ~/.ssh/known_hosts"
-                    // sh "ssh-keyscan -H ${REACT_APP_IP} >> ~/.ssh/known_hosts"
-                    // sh 'ansible-playbook -i inventory.ini deploy.yml -vvvv'
-                    // ansiblePlaybook credentialsId: 'jenkins-ssh-key',
-                    //              disableHostKeyChecking: true,
-                    //              installation: 'Ansible',
-                    //              inventory: 'inventory.ini',
-                    //              playbook: 'deploy.yml'
+                script {
+                    def commands = """
+                        echo 'Running commands on EC2...'
+                        sudo apt update -y'
+                    """
+
+                    sh """
+                        ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@${env.REACT_APP_IP} << 'EOF'
+                        ${commands}
+                        EOF
+                    """
                 }
             }
         }
+        // stage('Write SSH Key to File') {
+        //     steps {
+        //         script {
+        //             def sshKeyFile = "ansible/ssh_key.pem"  // Define path inside ansible directory
+
+        //             // Write SSH key to file
+        //             writeFile file: sshKeyFile, text: SSH_KEY
+        //             sh "chmod 600 ${sshKeyFile}"  // Secure key file
+
+        //             echo "✅ SSH Key written to ${sshKeyFile}"
+        //         }
+        //     }
+        // }
+
+
+        // stage('Run Ansible') {
+        //     steps {
+        //         dir('ansible') {
+        //             // sh "echo '[app]' > inventory"
+        //             // sh "echo '${REACT_APP_IP}' >> inventory"
+        //             // sh "mkdir -p ~/.ssh"
+        //             // sh "ssh-keyscan -H 100.27.23.82 >> ~/.ssh/known_hosts"
+        //             // sh "ssh-keyscan -H ${REACT_APP_IP} >> ~/.ssh/known_hosts"
+        //             // sh 'ansible-playbook -i inventory.ini deploy.yml -vvvv'
+        //             // ansiblePlaybook credentialsId: 'jenkins-ssh-key',
+        //             //              disableHostKeyChecking: true,
+        //             //              installation: 'Ansible',
+        //             //              inventory: 'inventory.ini',
+        //             //              playbook: 'deploy.yml'
+        //         }
+        //     }
+        // }
 
        stage('Terraform Destroy') {
             steps {
