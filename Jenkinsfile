@@ -87,7 +87,7 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sshagent(['SSH_KEY']) {
+                sshagent(['jenkins-ssh-key']) {
                     script {
                         def ec2User = 'ubuntu'
                         def projectRepo = "https://github.com/SamAshray1/portfolio-website.git"
