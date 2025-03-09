@@ -110,8 +110,8 @@ pipeline {
                     export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 
                     echo "📤 Uploading build artifacts to S3..."
-                    aws s3 cp build s3://${S3_BUCKET}/${s3Path} --recursive
-                    echo "✅ Build artifacts uploaded to: s3://${S3_BUCKET}/${s3Path}"
+                    aws s3 cp build s3://terraform-learning-samuel-devops/03-basics/ --recursive
+                    echo "✅ Build artifacts uploaded to: s3"
                     """
                 }
             }
