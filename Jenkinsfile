@@ -100,19 +100,22 @@ pipeline {
             }
         }
 
-        // stage('Upload Build Artifacts to S3') {
-        //     steps {
-        //         script {
-        //             def s3Path = "react-builds/${env.BUILD_NUMBER}/"
+        stage('Upload Build Artifacts to S3') {
+            steps {
+                script {
+                    def s3Path = "react-builds/${env.BUILD_NUMBER}/"
 
-        //             sh """
-        //             echo "📤 Uploading build artifacts to S3..."
-        //             aws s3 cp build s3://${S3_BUCKET}/${s3Path} --recursive
-        //             echo "✅ Build artifacts uploaded to: s3://${S3_BUCKET}/${s3Path}"
-        //             """
-        //         }
-        //     }
-        // }
+                    sh """
+                    export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                    export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+
+                    echo "📤 Uploading build artifacts to S3..."
+                    aws s3 cp build s3://${S3_BUCKET}/${s3Path} --recursive
+                    echo "✅ Build artifacts uploaded to: s3://${S3_BUCKET}/${s3Path}"
+                    """
+                }
+            }
+        }
 
         stage('SCP Build to EC2') {
             steps {
@@ -146,7 +149,7 @@ pipeline {
                         cd ${projectDir}
                         nohup serve -s build -l 3000 > react.log 2>&1 &
                         echo '✅ React app is running on port 3000!'
-                        EOF
+                        
                         """
                     }
                 }
