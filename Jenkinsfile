@@ -84,56 +84,120 @@ pipeline {
         //         }
         //     }
         // }
+        stage('Build React App in Jenkins') {
+            steps {
+                script {
+                    sh """
+                    echo '📦 Installing dependencies...'
+                    npm install
 
-        stage('Deploy to EC2') {
+                    echo '⚙️ Building the React app...'
+                    npm run build
+                    """
+                }
+            }
+        }
+
+        // stage('Upload Build Artifacts to S3') {
+        //     steps {
+        //         script {
+        //             def s3Path = "react-builds/${env.BUILD_NUMBER}/"
+
+        //             sh """
+        //             echo "📤 Uploading build artifacts to S3..."
+        //             aws s3 cp build s3://${S3_BUCKET}/${s3Path} --recursive
+        //             echo "✅ Build artifacts uploaded to: s3://${S3_BUCKET}/${s3Path}"
+        //             """
+        //         }
+        //     }
+        // }
+
+        stage('SCP Build to EC2') {
             steps {
                 sshagent(['jenkins-ssh-key']) {
                     script {
                         def ec2User = 'ubuntu'
-                        def projectRepo = "https://github.com/SamAshray1/portfolio-website.git"
                         def projectDir = "/home/${ec2User}/portfolio-website"
+                        def buildDir = "build"
 
-
-                        // Add EC2 host key to known_hosts to avoid SSH verification issues
                         sh """
-                        mkdir -p ~/.ssh
-                        ssh-keyscan -H ${env.REACT_APP_IP} >> ~/.ssh/known_hosts
-                        """
+                        echo '📡 Copying build files to EC2...'
+                        scp -r -o StrictHostKeyChecking=no ${buildDir} ${ec2User}@${env.REACT_APP_IP}:${projectDir}
 
-                        // SSH into EC2, kill any running instances of the app, and run the new JAR
-                        sh """
-                        ssh -t ${ec2User}@${env.REACT_APP_IP} <<EOF
-                        
-                        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-                        sudo apt-get install -y nodejs
-
-                        echo '✅ Node.js Version:'
-                        node -v
-                        echo '✅ npm Version:'
-                        npm -v
-
-                        echo '📂 Cloning the React Project...'
-                        sudo rm -rf ${projectDir}  # Clean up any existing project
-                        git clone ${projectRepo} ${projectDir}
-                        cd ${projectDir}
-
-                        echo '📦 Installing dependencies...'
-                        npm install
-
-                        echo '⚙️ Building the project...'
-                        npm run build
-
-                        echo '🚀 Running the React app...'
-                        nohup npm start > react.log 2>&1 &
-
-                        echo '✅ Deployment Completed Successfully!'
-                        
-
+                        echo '✅ Build files transferred successfully!'
                         """
                     }
                 }
             }
         }
+        stage('SCP Build to EC2') {
+            steps {
+                sshagent(['jenkins-ssh-key']) {
+                    script {
+                        def ec2User = 'ubuntu'
+                        def projectDir = "/home/${ec2User}/portfolio-website"
+                        def buildDir = "build"
+
+                        sh """
+                        echo '📡 Copying build files to EC2...'
+                        scp -r -o StrictHostKeyChecking=no ${buildDir} ${ec2User}@${env.REACT_APP_IP}:${projectDir}
+
+                        echo '✅ Build files transferred successfully!'
+                        """
+                    }
+                }
+            }
+        }
+        
+        // stage('Deploy to EC2') {
+        //     steps {
+        //         sshagent(['jenkins-ssh-key']) {
+        //             script {
+        //                 def ec2User = 'ubuntu'
+        //                 def projectRepo = "https://github.com/SamAshray1/portfolio-website.git"
+        //                 def projectDir = "/home/${ec2User}/portfolio-website"
+
+
+        //                 // Add EC2 host key to known_hosts to avoid SSH verification issues
+        //                 sh """
+        //                 mkdir -p ~/.ssh
+        //                 ssh-keyscan -H ${env.REACT_APP_IP} >> ~/.ssh/known_hosts
+        //                 """
+
+        //                 // SSH into EC2, kill any running instances of the app, and run the new JAR
+        //                 sh """
+        //                 ssh -t ${ec2User}@${env.REACT_APP_IP} <<EOF
+                        
+        //                 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+        //                 sudo apt-get install -y nodejs
+
+        //                 echo '✅ Node.js Version:'
+        //                 node -v
+        //                 echo '✅ npm Version:'
+        //                 npm -v
+
+        //                 echo '📂 Cloning the React Project...'
+        //                 sudo rm -rf ${projectDir}  # Clean up any existing project
+        //                 git clone ${projectRepo} ${projectDir}
+        //                 cd ${projectDir}
+
+        //                 echo '📦 Installing dependencies...'
+        //                 npm install
+
+        //                 echo '⚙️ Building the project...'
+        //                 npm run build
+
+        //                 echo '🚀 Running the React app...'
+        //                 nohup npm start > react.log 2>&1 &
+
+        //                 echo '✅ Deployment Completed Successfully!'
+                        
+
+        //                 """
+        //             }
+        //         }
+        //     }
+        // }
         // stage('Write SSH Key to File') {
         //     steps {
         //         script {
