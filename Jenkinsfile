@@ -25,6 +25,17 @@ pipeline {
                 }
             }
         }
+        stage('Terraform Destroy') {
+            steps {
+                script {
+                    input message: "Proceed with Terraform Destroy?", ok: "Yes"
+                }
+                dir('terraform') {
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
+
         stage('Extract EC2 IP') {
             steps {
                 script {
@@ -39,29 +50,80 @@ pipeline {
                 }
             }
         }
-        stage('Write SSH Key to File') {
-            steps {
-                script {
-                    def sshKeyFile = "ssh_key.pem"
-                    writeFile file: sshKeyFile, text: SSH_KEY
-                    sh "chmod 600 ${sshKeyFile}"  // Secure the file
-                }
-            }
-        }
 
-        stage('SSH into EC2 & Run Commands') {
-            steps {
-                script {
-                    def commands = """
-                        echo 'Running commands on EC2...'
-                        sudo apt update -y'
-                    """
+        // stage('Write SSH Key to File') {
+        //     steps {
+        //         script {
+        //             def sshKeyFile = "ssh_key.pem"
+        //             writeFile file: sshKeyFile, text: SSH_KEY
+        //             sh "chmod 600 ${sshKeyFile}"  // Secure the file
+        //         }
+        //     }
+        // }
 
-                    sh """
-                        ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@${env.REACT_APP_IP} << 'EOF'
-                        ${commands}
+        // stage('SSH into EC2 & Run Commands') {
+        //     steps {
+        //         script {
+        //             def commands = """
+        //                 echo 'Running commands on EC2...'
+        //                 sudo apt update -y'
+        //             """
+
+        //             sh """
+        //                 ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@${env.REACT_APP_IP} << 'EOF'
+        //                 ${commands}
+        //                 EOF
+        //             """
+        //         }
+        //     }
+        // }
+
+        stage('Deploy to EC2') {
+            steps {
+                sshagent(['SSH_KEY']) {
+                    script {
+                        def ec2User = 'ubuntu'
+                        def projectRepo = "https://github.com/SamAshray1/portfolio-website.git"
+                        def projectDir = "/home/${ec2User}/portfolio-website"
+
+
+                        // Add EC2 host key to known_hosts to avoid SSH verification issues
+                        sh """
+                        mkdir -p ~/.ssh
+                        ssh-keyscan -H ${env.REACT_APP_IP} >> ~/.ssh/known_hosts
+                        """
+
+                        // SSH into EC2, kill any running instances of the app, and run the new JAR
+                        sh """
+                        ssh -t ${ec2User}@${ec2Host} <<EOF
+                        
+                        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+                        sudo apt-get install -y nodejs
+
+                        echo '✅ Node.js Version:'
+                        node -v
+                        echo '✅ npm Version:'
+                        npm -v
+
+                        echo '📂 Cloning the React Project...'
+                        sudo rm -rf ${projectDir}  # Clean up any existing project
+                        git clone ${projectRepo} ${projectDir}
+                        cd ${projectDir}
+
+                        echo '📦 Installing dependencies...'
+                        npm install
+
+                        echo '⚙️ Building the project...'
+                        npm run build
+
+                        echo '🚀 Running the React app...'
+                        nohup npm start > react.log 2>&1 &
+
+                        echo '✅ Deployment Completed Successfully!'
                         EOF
-                    """
+
+                        """
+                    }
                 }
             }
         }
@@ -98,15 +160,5 @@ pipeline {
         //     }
         // }
 
-       stage('Terraform Destroy') {
-            steps {
-                script {
-                    input message: "Proceed with Terraform Destroy?", ok: "Yes"
-                }
-                dir('terraform') {
-                    sh 'terraform destroy -auto-approve'
-                }
-            }
-        }
     }
 }
