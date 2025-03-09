@@ -29,15 +29,7 @@ pipeline {
             steps {
                 script {
                      def ec2_ip = sh(script: "cd terraform && terraform output -raw public_ip", returnStdout: true).trim()
-                    
-                    // Write the private key to a temporary file
-                    def sshKeyFile = "/tmp/jenkins_ssh_key.pem"
-                    writeFile file: sshKeyFile, text: SSH_KEY
-                    sh "chmod 600 ${sshKeyFile}"  // Secure the private key file
 
-                    // Create Ansible inventory dynamically
-                    writeFile file: 'ansible/inventory.ini', text: """[react-server]
-${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
                     if (ec2_ip) {
                         echo "EC2 Public IP: ${ec2_ip}"
                         env.REACT_APP_IP = ec2_ip
@@ -47,30 +39,28 @@ ${ec2_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${sshKeyFile}"""
                 }
             }
         }
-
-        // stage('Terraform Destroy') {
-        //     steps {
-        //         dir('terraform') {
-        //             sh 'terraform destroy -auto-approve'
-        //         }
-        //     }
-        // }
-
-        stage('Test SSH Connection') {
+        stage('Write SSH Key to File') {
             steps {
                 script {
-                    def ssh_test = sh(script: """
-                        eval \$(ssh-agent -s)
-                        ssh-add /tmp/jenkins_ssh_key.pem
-                        ssh -o StrictHostKeyChecking=no ubuntu@${env.REACT_APP_IP} "echo SSH Connection Successful"
-                    """, returnStatus: true)
-                    
-                    if (ssh_test != 0) {
-                        error("SSH connection failed. Check private key and permissions.")
-                    }
+                    def sshKeyFile = "ansible/ssh_key.pem"  // Define path inside ansible directory
+
+                    // Write SSH key to file
+                    writeFile file: sshKeyFile, text: SSH_KEY
+                    sh "chmod 600 ${sshKeyFile}"  // Secure key file
+
+                    echo "✅ SSH Key written to ${sshKeyFile}"
                 }
             }
         }
+
+        stage('Debug Secret') {
+    steps {
+        script {
+            sh 'echo "⚠️ DEBUG: SECRET_VALUE is $SSH_KEY"'  // Not recommended!
+        }
+    }
+}
+
 
         stage('Run Ansible') {
             steps {
