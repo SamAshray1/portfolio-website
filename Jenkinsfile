@@ -88,11 +88,15 @@ pipeline {
             steps {
                 script {
                     sh """
+                    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+                    sudo apt-get install -y nodejs
                     echo '📦 Installing dependencies...'
                     npm install
 
                     echo '⚙️ Building the React app...'
                     npm run build
+
+                    ls
                     """
                 }
             }
@@ -193,8 +197,6 @@ pipeline {
         //                 nohup npm start > react.log 2>&1 &
 
         //                 echo '✅ Deployment Completed Successfully!'
-                        
-
         //                 """
         //             }
         //         }
