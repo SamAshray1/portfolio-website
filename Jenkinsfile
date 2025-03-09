@@ -102,7 +102,7 @@ pipeline {
 
                         // SSH into EC2, kill any running instances of the app, and run the new JAR
                         sh """
-                        ssh -t ${ec2User}@${ec2Host} <<EOF
+                        ssh -t ${ec2User}@${env.REACT_APP_IP} <<EOF
                         
                         curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
                         sudo apt-get install -y nodejs
