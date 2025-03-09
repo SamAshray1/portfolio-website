@@ -26,15 +26,22 @@ pipeline {
             }
         }
         stage('Terraform Destroy') {
-            steps {
-                script {
-                    input message: "Proceed with Terraform Destroy?", ok: "Yes"
-                }
+    steps {
+        script {
+            def userChoice = input message: "Proceed with Terraform Destroy?", parameters: [
+                choice(name: 'ACTION', choices: ['Yes', 'Skip'], description: 'Choose Yes to destroy resources or Skip to continue without destroying.')
+            ]
+            if (userChoice == 'Yes') {
                 dir('terraform') {
                     sh 'terraform destroy -auto-approve'
                 }
+            } else {
+                echo "Skipping Terraform Destroy."
             }
         }
+    }
+}
+
 
         stage('Extract EC2 IP') {
             steps {
