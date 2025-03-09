@@ -127,7 +127,7 @@ pipeline {
                         nohup npm start > react.log 2>&1 &
 
                         echo '✅ Deployment Completed Successfully!'
-                        EOF
+                        
 
                         """
                     }
