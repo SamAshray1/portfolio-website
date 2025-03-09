@@ -145,6 +145,14 @@ pipeline {
 
                         sh """
                         ssh -o StrictHostKeyChecking=no ${ec2User}@${env.REACT_APP_IP} <<EOF
+
+                        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+                        sudo apt-get install -y nodejs
+
+                        echo '📦 Installing dependencies...'
+                        npm install
+                        npm install -g serve
+
                         echo '🚀 Starting React app on EC2...'
                         cd ${projectDir}
                         nohup serve -s build -l 3000 > react.log 2>&1 &
