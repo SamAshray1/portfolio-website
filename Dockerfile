@@ -1,20 +1,32 @@
-# Step 1: Use the official Node.js 16 image as the base image
-FROM node:16
+FROM node:18-alpine AS build
 
-# Step 2: Set the working directory inside the container
 WORKDIR /app
 
-# Step 3: Copy the `package.json` and `package-lock.json` (if present) to the container
-COPY package*.json ./
+COPY package.json package-lock.json ./
+RUN npm install --frozen-lockfile
 
-# Step 4: Install the dependencies
-RUN npm install
-
-# Step 5: Copy the rest of the application code to the container
 COPY . .
 
-# Step 6: Expose the port that your application will run on (optional, but recommended)
-EXPOSE 3000
+RUN npm run build
 
-# Step 7: Run the application
-CMD ["npm", "start"]
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
+
+# FROM node:16
+
+# WORKDIR /app
+
+# COPY package*.json ./
+
+# RUN npm install
+
+# COPY . .
+
+# EXPOSE 3000
+
+# CMD ["npm", "start"]
