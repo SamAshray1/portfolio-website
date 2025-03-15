@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-app-deployment
+  labels:
+    app: react-app
+spec:
+  replicas: 2  # Number of pods
+  selector:
+    matchLabels:
+      app: react-app
+  template:
+    metadata:
+      labels:
+        app: react-app
+    spec:
+      containers:
+        - name: react-app
+          image: samqwerty12/react-app:latest  # Image from DockerHub
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-app-service
+spec:
+  selector:
+    app: react-app
+  type: LoadBalancer  # Makes it publicly accessible
+  ports:
+    - protocol: TCP
+      port: 80       # External access port
+      targetPort: 80 # Matches container port
