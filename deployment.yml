@@ -5,7 +5,7 @@ metadata:
   labels:
     app: react-app
 spec:
-  replicas: 2  # Number of pods
+  replicas: 1  # Number of pods
   selector:
     matchLabels:
       app: react-app
@@ -29,8 +29,9 @@ metadata:
 spec:
   selector:
     app: react-app
-  type: LoadBalancer  # Makes it publicly accessible
+  type: NodePort  # Change to NodePort
   ports:
     - protocol: TCP
       port: 80       # External access port
       targetPort: 80 # Matches container port
+      nodePort: 30080  # Exposed on the Node's port range (30000-32767)
