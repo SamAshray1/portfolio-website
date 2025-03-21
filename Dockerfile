@@ -1,5 +1,13 @@
 FROM node:18-alpine AS build
 
+# Use ARG for build-time variables
+ARG USERNAME
+ARG PASSWORD
+
+# Set them as environment variables inside the image
+ENV USERNAME=${USERNAME}
+ENV PASSWORD=${PASSWORD}
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
